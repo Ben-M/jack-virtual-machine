@@ -7,6 +7,8 @@ object Parser {
 
     val stripWhiteSpaceAndComments = raw"\s*(([\w ]*\w)|())\s*(//.*)?".r
     val pushCmd = raw"push ([a-z]*) (\d{1,5})".r
+    val popCmd = raw"pop ([a-z]*) (\d{1,5})".r
+
 
     line match {
       case stripWhiteSpaceAndComments(command, _, _, _) =>
@@ -21,6 +23,17 @@ object Parser {
               case "that"     => Push(That, value.toShort)
               case "pointer"  => Push(Pointer, value.toShort)
               case "temp"     => Push(Temp, value.toShort)
+              case _          => Malformed
+            }
+          case popCmd(segment, value) =>
+            segment match {
+              case "static"   => Pop(Static, value.toShort)
+              case "this"     => Pop(This, value.toShort)
+              case "local"    => Pop(Local, value.toShort)
+              case "argument" => Pop(Argument, value.toShort)
+              case "that"     => Pop(That, value.toShort)
+              case "pointer"  => Pop(Pointer, value.toShort)
+              case "temp"     => Pop(Temp, value.toShort)
               case _          => Malformed
             }
           case "add" => Add

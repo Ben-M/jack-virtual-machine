@@ -31,7 +31,7 @@ object Types {
 
 
   case class Push(memorySegment: MemorySegment, index: Short) extends Instruction
-  case class Pop(memorySegment: WritableMemorySegment) extends Instruction
+  case class Pop(memorySegment: WritableMemorySegment, index: Short) extends Instruction
 
   case class SyntaxError(line: Integer) extends Exception("", None.orNull)
 }

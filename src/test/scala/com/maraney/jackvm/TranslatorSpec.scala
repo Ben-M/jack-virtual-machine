@@ -10,7 +10,7 @@ class TranslatorSpec extends UnitSpec {
         Source.fromFile("src/test/fixtures/SimpleAdd.vm").getLines.toList
       val desiredOutput =
         Source.fromFile("src/test/fixtures/SimpleAdd.asm").mkString("")
-      val output = Translator.translate(input)
+      val output = Translator.translate(input, "SimpleAdd")
 
       output.get shouldEqual desiredOutput
     }
@@ -20,7 +20,7 @@ class TranslatorSpec extends UnitSpec {
         Source.fromFile("src/test/fixtures/StackTest.vm").getLines.toList
       val desiredOutput =
         Source.fromFile("src/test/fixtures/StackTest.asm").mkString("")
-      val output = Translator.translate(input)
+      val output = Translator.translate(input, "StackTest")
 
       output.get shouldEqual desiredOutput
     }

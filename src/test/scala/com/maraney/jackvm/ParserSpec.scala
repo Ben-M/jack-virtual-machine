@@ -46,8 +46,16 @@ class ParserSpec extends UnitSpec {
         Parser.parse("push pointer 12345") shouldEqual Push(Pointer, 12345.toShort)
         Parser.parse("push temp 12345") shouldEqual Push(Temp, 12345.toShort)
       }
+
+      "parse pop instructions" in {
+        Parser.parse("pop static 12345") shouldEqual Pop(Static, 12345.toShort)
+        Parser.parse("pop this 12345") shouldEqual Pop(This, 12345.toShort)
+        Parser.parse("pop local 12345") shouldEqual Pop(Local, 12345.toShort)
+        Parser.parse("pop argument 12345") shouldEqual Pop(Argument, 12345.toShort)
+        Parser.parse("pop that 12345") shouldEqual Pop(That, 12345.toShort)
+        Parser.parse("pop pointer 12345") shouldEqual Pop(Pointer, 12345.toShort)
+        Parser.parse("pop temp 12345") shouldEqual Pop(Temp, 12345.toShort)
+      }
     }
-
-
   }
 }

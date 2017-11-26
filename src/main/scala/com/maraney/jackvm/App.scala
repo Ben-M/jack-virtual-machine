@@ -15,7 +15,7 @@ object App {
           "Usage: \"jack-virtual-machine <name>\" will translate <name>.vm to <name>.asm")
       case Some(filename) =>
         val lines = readFile(filename)
-        Translator.translate(lines) match {
+        Translator.translate(lines, filename) match {
           case Success(translated) => writeFile(filename, translated)
           case Failure(SyntaxError(line)) =>
             System.err.println("Syntax error on line " + line)
