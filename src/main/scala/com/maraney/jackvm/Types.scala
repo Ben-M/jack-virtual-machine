@@ -28,10 +28,19 @@ object Types {
   object That extends WritableMemorySegment
   object Pointer extends WritableMemorySegment
   object Temp extends WritableMemorySegment
-
-
+  
   case class Push(memorySegment: MemorySegment, index: Short) extends Instruction
   case class Pop(memorySegment: WritableMemorySegment, index: Short) extends Instruction
+
+  case class LabelName(name: String) extends AnyVal
+  case class Label(label: LabelName) extends Instruction
+  case class Goto(label: LabelName) extends Instruction
+  case class IfGoto(label: LabelName) extends Instruction
+
+  case class FunctionName(name: String) extends AnyVal
+  case class Function(name: FunctionName, localVarCount: Short) extends Instruction
+  case class Call(name: FunctionName, argCount: Short) extends Instruction
+  case class Return() extends Instruction
 
   case class SyntaxError(line: Integer) extends Exception("", None.orNull)
 }

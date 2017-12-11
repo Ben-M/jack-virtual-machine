@@ -57,5 +57,40 @@ class ParserSpec extends UnitSpec {
         Parser.parse("pop temp 12345") shouldEqual Pop(Temp, 12345.toShort)
       }
     }
+
+    "parsing program flow instructions" must {
+      "parse label instructions" in {
+        Parser.parse("label o1:._.:1o") shouldEqual Label(LabelName("o1:._.:1o"))
+        Parser.parse("label") shouldEqual Malformed
+        Parser.parse("label ") shouldEqual Malformed
+        Parser.parse("label 0") shouldEqual Malformed
+        Parser.parse("label 0label") shouldEqual Malformed
+
+      }
+      "parse goto instructions" in {
+        Parser.parse("goto o1:._.:1o") shouldEqual Goto(LabelName("o1:._.:1o"))
+      }
+      "parse if-goto instructions" in {
+        Parser.parse("if-goto bob") shouldEqual IfGoto(LabelName("bob"))
+        Parser.parse("if-goto o1:._.:1o") shouldEqual IfGoto(LabelName("o1:._.:1o"))
+      }
+    }
+
+    "function calling instructions" must {
+      "parse function instructions" in {
+        Parser.parse("function o1:._.:1o 3") shouldEqual Function(FunctionName("o1:._.:1o"), 3)
+
+        Parser.parse("function o1:._.:1o") shouldEqual Malformed
+      }
+
+      "parse call instructions" in {
+        Parser.parse("call o1:._.:1o 3") shouldEqual Call(FunctionName("o1:._.:1o"), 3)
+        Parser.parse("call o1:._.:1o") shouldEqual Malformed
+      }
+
+      "parse return instructions" in {
+        Parser.parse("return") shouldEqual Return()
+      }
+    }
   }
 }
